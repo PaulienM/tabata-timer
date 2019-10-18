@@ -4,6 +4,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Entity(tableName = "tabata")
 public class Tabata {
     @PrimaryKey(autoGenerate = true)
@@ -20,6 +23,9 @@ public class Tabata {
     private int cycleNb;
     @ColumnInfo(name = "tabata_nb")
     private int tabataNb;
+    private static final String[] tabataStep = {"tabataNb", "prepareTime", "cycleNb", "workTime", "restTime", "longRestTime"};
+    private Map<String, String> stepName;
+    private Map<String, Integer> stepColor;
 
     public Tabata(int prepareTime, int workTime, int restTime, int longRestTime, int cycleNb, int tabataNb) {
         this.prepareTime = prepareTime;
@@ -28,6 +34,23 @@ public class Tabata {
         this.longRestTime = longRestTime;
         this.cycleNb = cycleNb;
         this.tabataNb = tabataNb;
+        stepName = new HashMap<>();
+        stepColor = new HashMap<>();
+        updateStepName();
+        updateStepColor();
+    }
+
+    public Tabata(){
+        this.prepareTime = 10;
+        this.workTime = 30;
+        this.restTime = 10;
+        this.longRestTime = 30;
+        this.cycleNb = 5;
+        this.tabataNb = 1;
+        stepName = new HashMap<>();
+        stepColor = new HashMap<>();
+        updateStepName();
+        updateStepColor();
     }
 
     public int getPrepareTime() {
@@ -76,5 +99,58 @@ public class Tabata {
 
     public void setTabataNb(int tabataNb) {
         this.tabataNb = tabataNb;
+    }
+
+    public String[] getTabataStep() { return tabataStep; }
+
+    public Map<String, String> getStepName() { return stepName; }
+
+    public Map<String, Integer> getStepColor() { return stepColor; }
+
+    public int getValue(String step) {
+        //Switch don't work
+        if(step == tabataStep[0]) { return this.getTabataNb(); }
+        if(step == tabataStep[1]) { return this.getPrepareTime(); }
+        if(step == tabataStep[2]) { return this.getCycleNb(); }
+        if(step == tabataStep[3]) { return this.getWorkTime(); }
+        if(step == tabataStep[4]) { return this.getRestTime(); }
+        if(step == tabataStep[5]) { return this.getLongRestTime(); }
+        else { throw new IllegalStateException("Unexpected value: " + step); }
+    }
+
+    public void remove(String step) {
+        if(step == tabataStep[0]) { this.setTabataNb(this.tabataNb - 1); }
+        if(step == tabataStep[1]) { this.setPrepareTime(this.prepareTime - 1); }
+        if(step == tabataStep[2]) { this.setCycleNb(this.cycleNb - 1); }
+        if(step == tabataStep[3]) { this.setWorkTime(this.workTime - 1); }
+        if(step == tabataStep[4]) { this.setRestTime(this.restTime - 1); }
+        if(step == tabataStep[5]) { this.setLongRestTime(this.longRestTime - 1); }
+    }
+
+    public void add(String step) {
+        if(step == tabataStep[0]) { this.setTabataNb(this.tabataNb + 1); }
+        if(step == tabataStep[1]) { this.setPrepareTime(this.prepareTime + 1); }
+        if(step == tabataStep[2]) { this.setCycleNb(this.cycleNb + 1); }
+        if(step == tabataStep[3]) { this.setWorkTime(this.workTime + 1); }
+        if(step == tabataStep[4]) { this.setRestTime(this.restTime + 1); }
+        if(step == tabataStep[5]) { this.setLongRestTime(this.longRestTime + 1); }
+    }
+
+    private void updateStepName() {
+        stepName.put(tabataStep[0], "Séquence : ");
+        stepName.put(tabataStep[1], "Préparation");
+        stepName.put(tabataStep[2], "Cycle : ");
+        stepName.put(tabataStep[3], "Travail");
+        stepName.put(tabataStep[4], "Repos");
+        stepName.put(tabataStep[5], "Repos long");
+    }
+
+    private void updateStepColor() {
+        stepColor.put(tabataStep[0], 0xFFF8FBFF);
+        stepColor.put(tabataStep[1], 0xFFF9E000);
+        stepColor.put(tabataStep[2], 0xFFECF6FF);
+        stepColor.put(tabataStep[3], 0xFFFF7658);
+        stepColor.put(tabataStep[4], 0xFFA0D800);
+        stepColor.put(tabataStep[5], 0xFF72EEFF);
     }
 }
