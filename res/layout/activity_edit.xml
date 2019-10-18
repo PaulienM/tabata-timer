@@ -5,16 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    tools:context=".MainActivity">
+    tools:context=".EditActivity">
 
-    <LinearLayout
-        android:id="@+id/principal_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/principal_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:padding="30dp"
+            />
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

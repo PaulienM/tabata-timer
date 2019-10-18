@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#5B9DFF</color>
+    <color name="colorPrimaryDark">#3F89FF</color>
     <color name="colorAccent">#D81B60</color>
     <color name="transparent">#00000000</color>
+    <color name="colorTextTime">#FFF</color>
+    <color name="colorTextRepetition">#888888</color>
+    <color name="color_prepareTime">#F9E000</color>
+    <color name="color_workTime">#FF7658</color>
+    <color name="color_restTime">#A0D800</color>
+    <color name="color_longRestTime">#72EEFF</color>
+    <color name="color_tabataNb">#F8FBFF</color>
+    <color name="color_cycleNb">#ECF6FF</color>
 </resources>
