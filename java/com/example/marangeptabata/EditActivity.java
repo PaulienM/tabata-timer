@@ -77,7 +77,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
-        Intent intent = new Intent(this, CountDownActivity.class);
+        Intent intent = new Intent(this, TimerActivity.class);
         startActivity(intent);
     }
 
@@ -85,6 +85,7 @@ public class EditActivity extends AppCompatActivity {
         String step = ((ImageButton)view).getTag().toString();
         tabata.add(step);
         update(step);
+        System.out.println(tabata.getTabataCycle() + "temps : " + tabata.getDuration());
     }
 
     public void remove(View view) {

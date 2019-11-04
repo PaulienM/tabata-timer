@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ public class Tabata {
     private static final String[] tabataStep = {"tabataNb", "prepareTime", "cycleNb", "workTime", "restTime", "longRestTime"};
     private Map<String, String> stepName;
     private Map<String, Integer> stepColor;
+    private ArrayList<String> tabataCycle;
 
     public Tabata(int prepareTime, int workTime, int restTime, int longRestTime, int cycleNb, int tabataNb) {
         this.prepareTime = prepareTime;
@@ -36,6 +38,7 @@ public class Tabata {
         this.tabataNb = tabataNb;
         stepName = new HashMap<>();
         stepColor = new HashMap<>();
+        tabataCycle = new ArrayList<>();
         updateStepName();
         updateStepColor();
     }
@@ -49,6 +52,7 @@ public class Tabata {
         this.tabataNb = 1;
         stepName = new HashMap<>();
         stepColor = new HashMap<>();
+        tabataCycle = new ArrayList<>();
         updateStepName();
         updateStepColor();
     }
@@ -152,5 +156,41 @@ public class Tabata {
         stepColor.put(tabataStep[3], 0xFFFF7658);
         stepColor.put(tabataStep[4], 0xFFA0D800);
         stepColor.put(tabataStep[5], 0xFF72EEFF);
+    }
+
+    public ArrayList getTabataCycle() {
+        this.tabataCycle.clear();
+
+        this.tabataCycle.add("preparation");
+        for(int repetition = 1; repetition <= this.getTabataNb(); repetition++) {
+            for(int cycle = 1; cycle <= this.getCycleNb(); cycle++) {
+                this.tabataCycle.add("work");
+                if(cycle != this.getCycleNb()) {
+                    this.tabataCycle.add("rest");
+                }
+            }
+            if(repetition != this.getTabataNb()) {
+                this.tabataCycle.add("long_rest");
+            }
+        }
+        return this.tabataCycle;
+    }
+
+    public int getDuration() {
+        int duration = 0;
+        for(String step : this.tabataCycle) {
+            switch (step) {
+                case "work" : duration += this.getWorkTime();
+                    break;
+                case "rest" : duration += this.getRestTime();
+                    break;
+                case "preparation" : duration += this.getPrepareTime();
+                    break;
+                case "long_rest" : duration += this.getLongRestTime();
+                    break;
+                default: break;
+            }
+        }
+        return duration;
     }
 }

@@ -12,4 +12,5 @@
     <color name="color_longRestTime">#72EEFF</color>
     <color name="color_tabataNb">#F8FBFF</color>
     <color name="color_cycleNb">#ECF6FF</color>
+    <color name="white">#FFF</color>
 </resources>
