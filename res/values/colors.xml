@@ -13,4 +13,5 @@
     <color name="color_tabataNb">#F8FBFF</color>
     <color name="color_cycleNb">#ECF6FF</color>
     <color name="white">#FFF</color>
+    <color name="shadow">#25000000</color>
 </resources>

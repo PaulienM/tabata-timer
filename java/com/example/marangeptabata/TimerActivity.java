@@ -34,7 +34,9 @@ public class TimerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timer);
         //Data initialisation
-        tabata = new Tabata(2,5,3,4,2,2);
+        //tabata = new Tabata(2,5,3,4,2,2);
+        tabata = getIntent().getParcelableExtra("tabata");
+        tabata.updateValues();
         tabataCycle = tabata.getTabataCycle();
         color = tabata.getStepColor();
         stepNameList = tabata.getStepName();
@@ -75,28 +77,24 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startWork() {
-        System.out.println("work");
         setBackgroundAndText("workTime");
         updatedTime = tabata.getWorkTime() * 1000;
         this.startTimer();
     }
 
     private void startRest() {
-        System.out.println("rest");
         setBackgroundAndText("restTime");
         updatedTime = tabata.getRestTime() * 1000;
         this.startTimer();
     }
 
     private void startPreparation() {
-        System.out.println("preparation");
         setBackgroundAndText("prepareTime");
         updatedTime = tabata.getPrepareTime() * 1000;
         this.startTimer();
     }
 
     private void startLongRest() {
-        System.out.println("long rest");
         setBackgroundAndText("longRestTime");
         updatedTime = tabata.getLongRestTime() * 1000;
         this.startTimer();
@@ -133,12 +131,7 @@ public class TimerActivity extends AppCompatActivity {
         int secs = (int) (updatedTime / 1000);
         int mins = secs / 60;
         secs = secs % 60;
-        if(mins > 0) {
-            timerValue.setText("" + mins + ":"
-                    + String.format("%02d", secs));
-        } else {
-            timerValue.setText(String.format("%02d", secs));
-        }
+        timerValue.setText("" + mins + ":" + String.format("%02d", secs));
     }
 
     private void startTimer() {

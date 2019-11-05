@@ -1,6 +1,7 @@
 package com.example.marangeptabata;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
@@ -12,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.marangeptabata.db.AppDatabase;
+import com.example.marangeptabata.db.DatabaseClient;
 import com.example.marangeptabata.model.Tabata;
 
 import java.util.HashMap;
@@ -25,11 +28,13 @@ public class EditActivity extends AppCompatActivity {
     private RelativeLayout tabataLayout;
     private LinearLayout principalLayout;
     private Map<String, TextView> stepTextView;
-    private Map<String, EditText> stepEditView;
+    private Map<String, TextView> stepEditView;
     private Map<String, RelativeLayout> stepLayout;
     private Map<String, String> stepName;
     private Map<String, Integer> stepColor;
 
+
+    private DatabaseClient mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,11 @@ public class EditActivity extends AppCompatActivity {
         stepName = tabata.getStepName();
         stepColor = tabata.getStepColor();
         setContentView(R.layout.activity_edit);
+
+
+        mDb = DatabaseClient.getInstance(getApplicationContext());
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "tabata").build();
+
 
         //Get views
         principalLayout = (LinearLayout) findViewById(R.id.principal_layout);
@@ -57,7 +67,7 @@ public class EditActivity extends AppCompatActivity {
             GradientDrawable background = (GradientDrawable) tabataLayout.getBackground().getCurrent();
             background.setColor(stepColor.get(step));
             stepTextView.put(step, (TextView) tabataLayout.findViewById(R.id.step_name));
-            stepEditView.put(step, (EditText) tabataLayout.findViewById(R.id.step_value));
+            stepEditView.put(step, (TextView) tabataLayout.findViewById(R.id.step_value));
             stepLayout.put(step, tabataLayout);
             stepTextView.get(step).setText(stepName.get(step));
             update(step);
@@ -78,6 +88,7 @@ public class EditActivity extends AppCompatActivity {
 
     public void start(View view) {
         Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("tabata",this.tabata);
         startActivity(intent);
     }
 
@@ -85,7 +96,6 @@ public class EditActivity extends AppCompatActivity {
         String step = ((ImageButton)view).getTag().toString();
         tabata.add(step);
         update(step);
-        System.out.println(tabata.getTabataCycle() + "temps : " + tabata.getDuration());
     }
 
     public void remove(View view) {
