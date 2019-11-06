@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/border_radius_time"
-    android:elevation="3dp">
+    android:elevation="4dp"
+    android:padding="5dp"
+    android:layout_margin="3dp"
+    android:gravity="center"
+    >
 
-    <ImageButton
-        android:id="@+id/step_remove"
+    <LinearLayout
+        android:id="@+id/buttonAndText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_remove_white_32dp"
-        android:background="@color/transparent"
-        android:layout_centerVertical="true"
-        android:onClick="remove"/>
+        android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/step_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="23dp"
-        android:textColor="@color/colorTextTime"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        <ImageButton
+            android:id="@+id/step_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_remove_white_32dp"
+            android:background="@color/transparent"
+            android:onClick="remove"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"/>
 
-    <TextView
-        android:id="@id/step_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:textColor="@color/colorTextTime"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/step_name"
-        android:inputType="number"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
 
-    <ImageButton
-        android:id="@+id/step_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_white_32dp"
-        android:background="@color/transparent"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:onClick="add"/>
+            <TextView
+                android:id="@+id/step_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:textColor="@color/colorTextTime"
+                android:layout_gravity="center"/>
 
+            <TextView
+                android:id="@id/step_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textColor="@color/colorTextTime"
+                android:inputType="number"/>
 
 
-</RelativeLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/step_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_add_white_32dp"
+            android:background="@color/transparent"
+            android:layout_gravity="right"
+            android:onClick="add"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

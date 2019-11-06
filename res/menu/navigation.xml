@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:title="home"
+        android:icon="@drawable/ic_home_white_24dp"/>
+
+    <item
+        android:id="@+id/menu_run"
+        android:title="run"
+        android:icon="@drawable/ic_play_arrow_white_24dp"/>
+
+    <item
+        android:id="@+id/menu_save"
+        android:title="save"
+        android:icon="@drawable/ic_save_white_24dp"/>
+
+    <item
+        android:id="@+id/menu_list"
+        android:title="list"
+        android:icon="@drawable/ic_format_list_bulleted_white_24dp"/>
+</menu>

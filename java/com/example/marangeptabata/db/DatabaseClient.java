@@ -50,7 +50,7 @@ public class DatabaseClient {
             super.onCreate(db);
 
             //
-            db.execSQL("INSERT INTO tabata (tabata, description) VALUES(\"tâche 1\", \"description\");");
+            db.execSQL("INSERT INTO tabata (prepareTime) VALUES(10);");
         }
     };
 }

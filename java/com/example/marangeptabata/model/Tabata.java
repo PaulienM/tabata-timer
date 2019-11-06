@@ -29,7 +29,7 @@ public class Tabata implements Parcelable {
     //@ColumnInfo(name = "tabata_nb")
     private int tabataNb;
     @Ignore
-    private static final String[] tabataStep = {"tabataNb", "prepareTime", "cycleNb", "workTime", "restTime", "longRestTime"};
+    private static final String[] tabataStep = {"prepareTime", "tabataNb", "cycleNb", "workTime", "restTime", "longRestTime"};
     @Ignore
     private Map<String, String> stepName;
     @Ignore
@@ -159,8 +159,8 @@ public class Tabata implements Parcelable {
 
     public int getValue(String step) {
         //Switch don't work
-        if(step == tabataStep[0]) { return this.getTabataNb(); }
-        if(step == tabataStep[1]) { return this.getPrepareTime(); }
+        if(step == tabataStep[0]) { return this.getPrepareTime(); }
+        if(step == tabataStep[1]) { return this.getTabataNb(); }
         if(step == tabataStep[2]) { return this.getCycleNb(); }
         if(step == tabataStep[3]) { return this.getWorkTime(); }
         if(step == tabataStep[4]) { return this.getRestTime(); }
@@ -169,8 +169,8 @@ public class Tabata implements Parcelable {
     }
 
     public void remove(String step) {
-        if(step == tabataStep[0] && this.tabataNb > 1) { this.setTabataNb(this.tabataNb - 1); }
-        if(step == tabataStep[1] && this.prepareTime > 1) { this.setPrepareTime(this.prepareTime - 1); }
+        if(step == tabataStep[0] && this.prepareTime > 1) { this.setPrepareTime(this.prepareTime - 1); }
+        if(step == tabataStep[1] && this.tabataNb > 1) { this.setTabataNb(this.tabataNb - 1); }
         if(step == tabataStep[2] && this.cycleNb > 1) { this.setCycleNb(this.cycleNb - 1); }
         if(step == tabataStep[3] && this.workTime > 1) { this.setWorkTime(this.workTime - 1); }
         if(step == tabataStep[4] && this.restTime > 1) { this.setRestTime(this.restTime - 1); }
@@ -178,8 +178,8 @@ public class Tabata implements Parcelable {
     }
 
     public void add(String step) {
-        if(step == tabataStep[0] && this.tabataNb < 999) { this.setTabataNb(this.tabataNb + 1); }
-        if(step == tabataStep[1] && this.prepareTime < 999) { this.setPrepareTime(this.prepareTime + 1); }
+        if(step == tabataStep[0] && this.prepareTime < 999) { this.setPrepareTime(this.prepareTime + 1); }
+        if(step == tabataStep[1] && this.tabataNb < 999) { this.setTabataNb(this.tabataNb + 1); }
         if(step == tabataStep[2] && this.cycleNb < 999) { this.setCycleNb(this.cycleNb + 1); }
         if(step == tabataStep[3] && this.workTime < 999) { this.setWorkTime(this.workTime + 1); }
         if(step == tabataStep[4] && this.restTime < 999) { this.setRestTime(this.restTime + 1); }
@@ -187,8 +187,8 @@ public class Tabata implements Parcelable {
     }
 
     private void updateStepName() {
-        stepName.put(tabataStep[0], "Séquence : ");
-        stepName.put(tabataStep[1], "Préparation");
+        stepName.put(tabataStep[0], "Préparation");
+        stepName.put(tabataStep[1], "Séquence : ");
         stepName.put(tabataStep[2], "Cycle : ");
         stepName.put(tabataStep[3], "Travail");
         stepName.put(tabataStep[4], "Repos");
@@ -196,8 +196,8 @@ public class Tabata implements Parcelable {
     }
 
     private void updateStepColor() {
-        stepColor.put(tabataStep[0], 0xFFF8FBFF);
-        stepColor.put(tabataStep[1], 0xFFF9E000);
+        stepColor.put(tabataStep[0], 0xFFF9E000);
+        stepColor.put(tabataStep[1], 0xFFF8FBFF);
         stepColor.put(tabataStep[2], 0xFFECF6FF);
         stepColor.put(tabataStep[3], 0xFFFF7658);
         stepColor.put(tabataStep[4], 0xFFA0D800);

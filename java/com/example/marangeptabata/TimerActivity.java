@@ -23,8 +23,10 @@ public class TimerActivity extends AppCompatActivity {
     private ArrayList<String> tabataCycle;
     private Map<String, Integer> color;
     private Map<String, String> stepNameList;
+    private boolean timerIsRunning = false;
     //View
     private Button startPauseButton;
+    private Button stopButton;
     private TextView timerValue;
     private RelativeLayout activityTimer;
     private TextView stepName;
@@ -44,10 +46,13 @@ public class TimerActivity extends AppCompatActivity {
         activityTimer = (RelativeLayout) findViewById(R.id.activity_timer);
         timerValue = (TextView) findViewById(R.id.timerValue);
         startPauseButton = (Button) findViewById(R.id.startPauseButton);
+        stopButton = (Button) findViewById(R.id.stopButton);
         stepName = (TextView) findViewById(R.id.step_name);
         //Event
 
         //Graphic update
+        getSupportActionBar().hide();
+        startPauseButton.setText("PAUSE");
         update();
         nextStep();
     }
@@ -77,54 +82,35 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startWork() {
-        setBackgroundAndText("workTime");
+        setColorAndText("workTime");
         updatedTime = tabata.getWorkTime() * 1000;
         this.startTimer();
     }
 
     private void startRest() {
-        setBackgroundAndText("restTime");
+        setColorAndText("restTime");
         updatedTime = tabata.getRestTime() * 1000;
         this.startTimer();
     }
 
     private void startPreparation() {
-        setBackgroundAndText("prepareTime");
+        setColorAndText("prepareTime");
         updatedTime = tabata.getPrepareTime() * 1000;
         this.startTimer();
     }
 
     private void startLongRest() {
-        setBackgroundAndText("longRestTime");
+        setColorAndText("longRestTime");
         updatedTime = tabata.getLongRestTime() * 1000;
         this.startTimer();
     }
 
-    private void setBackgroundAndText(String step) {
-        activityTimer.setBackgroundColor(color.get(step));
+    private void setColorAndText(String step) {
+        int stepColor = color.get(step);
+        activityTimer.setBackgroundColor(stepColor);
+        startPauseButton.setTextColor(stepColor);
+        stopButton.setTextColor(stepColor);
         stepName.setText(stepNameList.get(step));
-    }
-
-    private void onStart(View view) {
-
-        timer = new CountDownTimer(updatedTime, 10) {
-
-            public void onTick(long millisUntilFinished) {
-                updatedTime = millisUntilFinished;
-                update();
-            }
-
-            public void onFinish() {
-                updatedTime = 0;
-                update();
-            }
-        }.start();
-    }
-
-    private void onPause(View view) {
-        if (timer != null) {
-            timer.cancel();
-        }
     }
 
     private void update() {
@@ -138,15 +124,34 @@ public class TimerActivity extends AppCompatActivity {
         timer = new CountDownTimer(updatedTime, 10) {
 
             public void onTick(long millisUntilFinished) {
+                timerIsRunning = true;
                 updatedTime = millisUntilFinished;
                 update();
             }
 
             public void onFinish() {
+                timerIsRunning = false;
                 updatedTime = 0;
                 update();
                 nextStep();
             }
         }.start();
+    }
+
+    public void onStartPause(View view) {
+        if(timerIsRunning) {
+            timer.cancel();
+            timerIsRunning = false;
+            startPauseButton.setText("PLAY");
+            stopButton.setVisibility(View.VISIBLE);
+        } else {
+            startTimer();
+            startPauseButton.setText("PAUSE");
+            stopButton.setVisibility(View.GONE);
+        }
+    }
+
+    public void onStop(View view) {
+        finish();
     }
 }

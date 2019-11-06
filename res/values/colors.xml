@@ -14,4 +14,5 @@
     <color name="color_cycleNb">#ECF6FF</color>
     <color name="white">#FFF</color>
     <color name="shadow">#25000000</color>
+    <color name="bottomNav">#C4C4C4</color>
 </resources>
