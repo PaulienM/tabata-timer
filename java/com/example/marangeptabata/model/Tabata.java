@@ -70,6 +70,7 @@ public class Tabata implements Parcelable {
 
     protected Tabata(Parcel in) {
         id = in.readLong();
+        name = in.readString();
         prepareTime = in.readInt();
         workTime = in.readInt();
         restTime = in.readInt();
@@ -77,6 +78,24 @@ public class Tabata implements Parcelable {
         cycleNb = in.readInt();
         tabataNb = in.readInt();
         tabataCycle = in.createStringArrayList();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(name);
+        dest.writeInt(prepareTime);
+        dest.writeInt(workTime);
+        dest.writeInt(restTime);
+        dest.writeInt(longRestTime);
+        dest.writeInt(cycleNb);
+        dest.writeInt(tabataNb);
+        dest.writeStringList(tabataCycle);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Tabata> CREATOR = new Creator<Tabata>() {
@@ -249,22 +268,5 @@ public class Tabata implements Parcelable {
             }
         }
         return duration;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
-        dest.writeInt(prepareTime);
-        dest.writeInt(workTime);
-        dest.writeInt(restTime);
-        dest.writeInt(longRestTime);
-        dest.writeInt(cycleNb);
-        dest.writeInt(tabataNb);
-        dest.writeStringList(tabataCycle);
     }
 }

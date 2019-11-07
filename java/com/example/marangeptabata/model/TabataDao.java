@@ -16,7 +16,7 @@ public interface TabataDao {
     @Query("SELECT COUNT(*) FROM tabata")
     int count();
 
-    @Query("SELECT * FROM tabata WHERE id LIKE :id")
+    @Query("SELECT * FROM tabata WHERE id = :id")
     Tabata findById(long id);
 
     @Insert

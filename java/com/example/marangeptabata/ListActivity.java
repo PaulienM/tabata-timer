@@ -7,15 +7,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.marangeptabata.db.DatabaseClient;
 import com.example.marangeptabata.model.Tabata;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
@@ -59,7 +57,7 @@ public class ListActivity extends AppCompatActivity {
         getTabatas.execute();
     }
 
-    private void findByIdAndStartTimer(long id) {
+    private void findById(long id, final boolean startTimerActivity, final boolean startEditActivity, final boolean removeAfterFind) {
         class FindById extends AsyncTask<Void, Void, Tabata> {
             private long id;
 
@@ -69,17 +67,24 @@ public class ListActivity extends AppCompatActivity {
 
             @Override
             protected Tabata doInBackground(Void... voids) {
-                System.out.println(id);
                 Tabata tabata = mDb.getAppDatabase()
                         .tabataDao()
                         .findById(id);
-                return null;
+                return tabata;
             }
 
             @Override
             protected void onPostExecute(Tabata tabata) {
                 super.onPostExecute(tabata);
-                startTimerActivity(tabata);
+                if(startEditActivity) {
+                    startEditActivity(tabata);
+                }
+                if(startTimerActivity) {
+                    startTimerActivity(tabata);
+                }
+                if(removeAfterFind) {
+                    removeTabata(tabata);
+                }
             }
         }
         FindById findById = new FindById();
@@ -87,7 +92,29 @@ public class ListActivity extends AppCompatActivity {
         findById.execute();
     }
 
+    private void removeTabata(final Tabata tabata) {
+        class RemoveTabata extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDb.getAppDatabase()
+                        .tabataDao()
+                        .delete(tabata);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                getTabata();
+            }
+        }
+        RemoveTabata removeTabata = new RemoveTabata();
+        removeTabata.execute();
+    }
+
     private void displayTabatas() {
+        tabataList.removeAllViews();
         for(Tabata tabata : allTabatas) {
             listItem = (LinearLayout) getLayoutInflater().inflate(R.layout.tabata_list_item, null);
             listItem.setTag(tabata.getId());
@@ -96,18 +123,34 @@ public class ListActivity extends AppCompatActivity {
             ((TextView) listItem.findViewById(R.id.tabata_list_rest_time)).setText("Repos : " + tabata.getRestTime());
             ((TextView) listItem.findViewById(R.id.tabata_list_cylce_nb)).setText("Cycle : x" + tabata.getCycleNb());
             ((TextView) listItem.findViewById(R.id.tabata_list_tabata_nb)).setText("Repetitions : x" + tabata.getTabataNb());
+            ((ImageButton) listItem.findViewById(R.id.removeButton)).setTag(tabata.getId());
+            ((ImageButton) listItem.findViewById(R.id.editButton)).setTag(tabata.getId());
             tabataList.addView(listItem);
         }
     }
 
     public void startTabata(View view) {
-        findByIdAndStartTimer(Long.parseLong(view.getTag().toString()));
+        findById(Long.parseLong(view.getTag().toString()), true, false, false);
     }
 
     private void startTimerActivity(Tabata tabata) {
-        System.out.println(tabata);
         Intent intent = new Intent(this, TimerActivity.class);
         intent.putExtra("tabata",tabata);
         startActivity(intent);
+    }
+
+    private void startEditActivity(Tabata tabata) {
+        Intent intent = new Intent(this, EditActivity.class);
+        intent.putExtra("tabata",tabata);
+        startActivity(intent);
+    }
+
+    public void onEdit(View view) {
+        findById(Long.parseLong(view.getTag().toString()), false, true, false);
+    }
+
+    public void onRemove(View view) {
+        System.out.println("la");
+        findById(Long.parseLong(view.getTag().toString()), false, false, true);
     }
 }

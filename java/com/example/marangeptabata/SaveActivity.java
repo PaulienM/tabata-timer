@@ -14,6 +14,7 @@ import com.example.marangeptabata.model.Tabata;
 public class SaveActivity extends AppCompatActivity {
 
     private Tabata tabata;
+    private boolean update;
     private DatabaseClient mDb;
     private EditText editTabataName;
 
@@ -24,10 +25,12 @@ public class SaveActivity extends AppCompatActivity {
 
         //Data init
         tabata = getIntent().getParcelableExtra("tabata");
+        update = getIntent().getBooleanExtra("update", false);
         mDb = DatabaseClient.getInstance(getApplicationContext());
 
         //Get view
         editTabataName = findViewById(R.id.editTabataName);
+        editTabataName.setText(tabata.getName());
     }
 
     private void saveTabata() {
@@ -35,9 +38,15 @@ public class SaveActivity extends AppCompatActivity {
 
             @Override
             protected Tabata doInBackground(Void... voids) {
-                mDb.getAppDatabase()
+                if(update) {
+                    mDb.getAppDatabase()
+                        .tabataDao()
+                        .update(tabata);
+                } else {
+                    mDb.getAppDatabase()
                         .tabataDao()
                         .insert(tabata);
+                }
                 return tabata;
             }
 

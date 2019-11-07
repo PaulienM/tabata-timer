@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.marangeptabata.db.DatabaseClient;
-import com.example.marangeptabata.db.SaveTabata;
 import com.example.marangeptabata.model.Tabata;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.HashMap;
@@ -21,6 +20,7 @@ public class EditActivity extends AppCompatActivity {
 
     // Data
     private Tabata tabata;
+    private Boolean update;
     //Views
     private LinearLayout tabataLayout;
     private LinearLayout principalLayout;
@@ -31,14 +31,20 @@ public class EditActivity extends AppCompatActivity {
     private Map<String, Integer> stepColor;
     private BottomNavigationView navigation;
 
-    private SaveTabata save;
     private DatabaseClient mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Data initialisation
-        tabata = new Tabata();
+        if(getIntent().getParcelableExtra("tabata") != null) {
+            tabata = getIntent().getParcelableExtra("tabata");
+            tabata.updateValues();
+            update = true;
+        } else {
+            tabata = new Tabata();
+            update = false;
+        }
         stepTextView = new HashMap<>();
         stepEditView = new HashMap<>();
         stepLayout = new HashMap<>();
@@ -112,6 +118,7 @@ public class EditActivity extends AppCompatActivity {
     private void startSaveActivity() {
         Intent intent = new Intent(this, SaveActivity.class);
         intent.putExtra("tabata",this.tabata);
+        intent.putExtra("update", this.update);
         startActivity(intent);
     }
 
