@@ -2,9 +2,6 @@ package com.example.marangeptabata;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.room.Room;
-
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -12,19 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.example.marangeptabata.db.AppDatabase;
 import com.example.marangeptabata.db.DatabaseClient;
-import com.example.marangeptabata.db.GetTabatas;
 import com.example.marangeptabata.db.SaveTabata;
 import com.example.marangeptabata.model.Tabata;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EditActivity extends AppCompatActivity {
@@ -42,7 +32,6 @@ public class EditActivity extends AppCompatActivity {
     private BottomNavigationView navigation;
 
     private SaveTabata save;
-    private GetTabatas getTabatas;
     private DatabaseClient mDb;
 
     @Override
@@ -56,15 +45,6 @@ public class EditActivity extends AppCompatActivity {
         stepName = tabata.getStepName();
         stepColor = tabata.getStepColor();
         setContentView(R.layout.activity_edit);
-
-
-        mDb = DatabaseClient.getInstance(getApplicationContext());
-        save = new SaveTabata();
-        getTabatas = new GetTabatas();
-        save.setDatabase(mDb);
-        save.setTabata(tabata);
-        getTabatas.setDatabase(mDb);
-
 
         //Get views
         principalLayout = (LinearLayout) findViewById(R.id.principal_layout);
@@ -101,21 +81,22 @@ public class EditActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigation.setSelectedItemId(R.id.menu_home);
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.menu_save:
-                    return true;
-                case R.id.menu_run:
-                    startTimerActivity();
-                    return true;
                 case R.id.menu_home:
                     return true;
                 case R.id.menu_list:
-                    //startListActivity();
+                    startListActivity();
                     return true;
             }
             return false;
@@ -128,22 +109,38 @@ public class EditActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void startSaveActivity() {
+        Intent intent = new Intent(this, SaveActivity.class);
+        intent.putExtra("tabata",this.tabata);
+        startActivity(intent);
+    }
+
+    private void startListActivity() {
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
+    }
+
     public void add(View view) {
         String step = ((ImageButton)view).getTag().toString();
         tabata.add(step);
         update(step);
-        //save.execute();
     }
 
     public void remove(View view) {
         String step = ((ImageButton)view).getTag().toString();
         tabata.remove(step);
         update(step);
-        ArrayList<Tabata> tabatas = new ArrayList<>();
-        //getTabatas.execute();
     }
 
     public void update(String step) {
         stepEditView.get(step).setText(Integer.toString(tabata.getValue(step)));
+    }
+
+    public void onSave(View view) {
+        startSaveActivity();
+    }
+
+    public void onPlay(View view) {
+        startTimerActivity();
     }
 }

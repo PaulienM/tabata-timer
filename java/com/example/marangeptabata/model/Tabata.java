@@ -16,17 +16,19 @@ import java.util.Map;
 public class Tabata implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private long id;
+    @ColumnInfo(name = "name")
+    private String name;
     @ColumnInfo(name = "prepare_time")
     private int prepareTime;
-    //@ColumnInfo(name = "work_time")
+    @ColumnInfo(name = "work_time")
     private int workTime;
-    //@ColumnInfo(name = "rest_time")
+    @ColumnInfo(name = "rest_time")
     private int restTime;
-    //@ColumnInfo(name = "long_rest_time")
+    @ColumnInfo(name = "long_rest_time")
     private int longRestTime;
-    //@ColumnInfo(name = "cycle_nb")
+    @ColumnInfo(name = "cycle_nb")
     private int cycleNb;
-    //@ColumnInfo(name = "tabata_nb")
+    @ColumnInfo(name = "tabata_nb")
     private int tabataNb;
     @Ignore
     private static final String[] tabataStep = {"prepareTime", "tabataNb", "cycleNb", "workTime", "restTime", "longRestTime"};
@@ -37,6 +39,7 @@ public class Tabata implements Parcelable {
     @Ignore
     private ArrayList<String> tabataCycle;
 
+    @Ignore
     public Tabata(int prepareTime, int workTime, int restTime, int longRestTime, int cycleNb, int tabataNb) {
         this.prepareTime = prepareTime;
         this.workTime = workTime;
@@ -101,6 +104,14 @@ public class Tabata implements Parcelable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrepareTime() {

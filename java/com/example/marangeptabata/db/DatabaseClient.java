@@ -24,7 +24,7 @@ public class DatabaseClient {
         //appDatabase = Room.databaseBuilder(context, AppDatabase.class, "MyToDos").build();
 
         // Ajout de la méthode addCallback permettant de populate (remplir) la base de données à sa création
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "Tabata").addCallback(roomDatabaseCallback).build();
+        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "Tabata").addCallback(roomDatabaseCallback).fallbackToDestructiveMigration().build();
     }
 
     // Méthode statique
@@ -50,7 +50,7 @@ public class DatabaseClient {
             super.onCreate(db);
 
             //
-            db.execSQL("INSERT INTO tabata (prepareTime) VALUES(10);");
+           // db.execSQL("INSERT INTO tabata (prepareTime) VALUES(10);");
         }
     };
 }
