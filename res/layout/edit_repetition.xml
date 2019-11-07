@@ -28,7 +28,7 @@
             android:background="@color/transparent"
             android:layout_gravity="center"
             android:layout_marginRight="10dp"
-            android:onClick="remove"/>
+            />
 
         <TextView
             android:id="@+id/step_value"
@@ -44,8 +44,7 @@
             android:src="@drawable/ic_add_circle_outline_grey_24dp"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:onClick="add"/>
+            android:layout_marginLeft="10dp"/>
 
     </LinearLayout>
 
@@ -56,6 +55,7 @@
         android:orientation="vertical"
         android:layout_margin="3dp"
         android:showDividers="middle"
-        android:divider="@drawable/divider"/>
+        android:divider="@drawable/divider"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

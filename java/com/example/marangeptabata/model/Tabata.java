@@ -187,14 +187,34 @@ public class Tabata implements Parcelable {
 
     public Map<String, Integer> getStepColor() { return stepColor; }
 
-    public int getValue(String step) {
+    public String getValue(String step) {
         //Switch don't work
-        if(step == tabataStep[0]) { return this.getPrepareTime(); }
-        if(step == tabataStep[1]) { return this.getTabataNb(); }
-        if(step == tabataStep[2]) { return this.getCycleNb(); }
-        if(step == tabataStep[3]) { return this.getWorkTime(); }
-        if(step == tabataStep[4]) { return this.getRestTime(); }
-        if(step == tabataStep[5]) { return this.getLongRestTime(); }
+        if(step == tabataStep[0]) {
+            int secs = this.getPrepareTime();
+            int mins = secs / 60;
+            secs = secs % 60;
+            return ("" + mins + ":" + String.format("%02d", secs));
+        }
+        if(step == tabataStep[1]) { return Integer.toString(this.getTabataNb()); }
+        if(step == tabataStep[2]) { return Integer.toString(this.getCycleNb()); }
+        if(step == tabataStep[3]) {
+            int secs = this.getWorkTime();
+            int mins = secs / 60;
+            secs = secs % 60;
+            return ("" + mins + ":" + String.format("%02d", secs));
+        }
+        if(step == tabataStep[4]) {
+            int secs = this.getRestTime();
+            int mins = secs / 60;
+            secs = secs % 60;
+            return ("" + mins + ":" + String.format("%02d", secs));
+        }
+        if(step == tabataStep[5]) {
+            int secs = this.getLongRestTime();
+            int mins = secs / 60;
+            secs = secs % 60;
+            return ("" + mins + ":" + String.format("%02d", secs));
+        }
         else { throw new IllegalStateException("Unexpected value: " + step); }
     }
 

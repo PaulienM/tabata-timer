@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.marangeptabata.Libraries.RepeatListener;
 import com.example.marangeptabata.db.DatabaseClient;
 import com.example.marangeptabata.model.Tabata;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,6 +76,18 @@ public class EditActivity extends AppCompatActivity {
             update(step);
             ((ImageButton) tabataLayout.findViewById(R.id.step_add)).setTag(step);
             ((ImageButton) tabataLayout.findViewById(R.id.step_remove)).setTag(step);
+            ((ImageButton) tabataLayout.findViewById(R.id.step_add)).setOnTouchListener(new RepeatListener(400, 70, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    add(view);
+                }
+            }));
+            ((ImageButton) tabataLayout.findViewById(R.id.step_remove)).setOnTouchListener(new RepeatListener(400, 70, new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    remove(view);
+                }
+            }));
             switch (step) {
                 case "prepareTime" :
                 case "tabataNb": principalLayout.addView(tabataLayout);
@@ -140,7 +154,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     public void update(String step) {
-        stepEditView.get(step).setText(Integer.toString(tabata.getValue(step)));
+        stepEditView.get(step).setText(tabata.getValue(step));
     }
 
     public void onSave(View view) {
