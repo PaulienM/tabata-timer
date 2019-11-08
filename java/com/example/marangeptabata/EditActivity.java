@@ -2,6 +2,8 @@ package com.example.marangeptabata;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -136,6 +138,7 @@ public class EditActivity extends AppCompatActivity {
 
     private void startListActivity() {
         Intent intent = new Intent(this, ListActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -153,6 +156,8 @@ public class EditActivity extends AppCompatActivity {
 
     public void update(String step) {
         stepEditView.get(step).setText(tabata.getValue(step));
+        tabata.getTabataCycle();
+        setTitle("Tabata : (" + tabata.getDuration() + ")");
     }
 
     public void onSave(View view) {

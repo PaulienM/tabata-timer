@@ -247,7 +247,7 @@ public class Tabata implements Parcelable {
 
     private void updateStepColor() {
         stepColor.put(tabataStep[0], 0xFFF9E000);
-        stepColor.put(tabataStep[1], 0xFFF8FBFF);
+        stepColor.put(tabataStep[1], 0xFFF5F9FA);
         stepColor.put(tabataStep[2], 0xFFECF6FF);
         stepColor.put(tabataStep[3], 0xFFFF7658);
         stepColor.put(tabataStep[4], 0xFFA0D800);
@@ -272,7 +272,7 @@ public class Tabata implements Parcelable {
         return this.tabataCycle;
     }
 
-    public int getDuration() {
+    public String getDuration() {
         int duration = 0;
         for(String step : this.tabataCycle) {
             switch (step) {
@@ -287,6 +287,10 @@ public class Tabata implements Parcelable {
                 default: break;
             }
         }
-        return duration;
+        int secs = duration;
+        int mins = secs / 60;
+        secs = secs % 60;
+
+        return ("" + mins + ":" + String.format("%02d", secs));
     }
 }

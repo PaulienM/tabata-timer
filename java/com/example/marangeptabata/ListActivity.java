@@ -170,11 +170,13 @@ public class ListActivity extends AppCompatActivity {
     private void startEditActivity(Tabata tabata) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("tabata",tabata);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
     private void startEditActivity() {
         Intent intent = new Intent(this, EditActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
