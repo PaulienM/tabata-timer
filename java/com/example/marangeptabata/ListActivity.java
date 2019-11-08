@@ -1,10 +1,12 @@
 package com.example.marangeptabata;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.marangeptabata.db.DatabaseClient;
 import com.example.marangeptabata.model.Tabata;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class ListActivity extends AppCompatActivity {
     //views
     private LinearLayout tabataList;
     private LinearLayout listItem;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +38,31 @@ public class ListActivity extends AppCompatActivity {
         getTabata();
 
         tabataList = findViewById(R.id.tabataList);
+        navigation = (BottomNavigationView) findViewById(R.id.menu);
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigation.setSelectedItemId(R.id.menu_list);
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.menu_home:
+                    startEditActivity();
+                    return true;
+                case R.id.menu_list:
+                    return true;
+            }
+            return false;
+        }
+    };
 
     private void getTabata() {
         class GetTabatas extends AsyncTask<Void, Void, List<Tabata>> {
@@ -142,6 +170,11 @@ public class ListActivity extends AppCompatActivity {
     private void startEditActivity(Tabata tabata) {
         Intent intent = new Intent(this, EditActivity.class);
         intent.putExtra("tabata",tabata);
+        startActivity(intent);
+    }
+
+    private void startEditActivity() {
+        Intent intent = new Intent(this, EditActivity.class);
         startActivity(intent);
     }
 

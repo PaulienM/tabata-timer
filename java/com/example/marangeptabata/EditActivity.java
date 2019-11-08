@@ -33,8 +33,6 @@ public class EditActivity extends AppCompatActivity {
     private Map<String, Integer> stepColor;
     private BottomNavigationView navigation;
 
-    private DatabaseClient mDb;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -27,10 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/bottomNav"
+        android:background="@color/white"
         app:menu="@menu/navigation"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"
+        android:elevation="-2dp"
         />
 
 </RelativeLayout>
