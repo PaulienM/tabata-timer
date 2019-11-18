@@ -3,7 +3,6 @@ package com.example.marangeptabata;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.marangeptabata.Libraries.RepeatListener;
-import com.example.marangeptabata.db.DatabaseClient;
 import com.example.marangeptabata.model.Tabata;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.HashMap;

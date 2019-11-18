@@ -1,5 +1,6 @@
 package com.example.marangeptabata;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -49,12 +50,33 @@ public class TimerActivity extends AppCompatActivity {
         stopButton = (Button) findViewById(R.id.stopButton);
         stepName = (TextView) findViewById(R.id.step_name);
         //Event
-
-        //Graphic update
         getSupportActionBar().hide();
         startPauseButton.setText("PAUSE");
-        update();
-        nextStep();
+        if (savedInstanceState != null) {
+            stepNb = savedInstanceState.getInt("step");
+            updatedTime = savedInstanceState.getLong("time");
+            switch (tabataCycle.get(stepNb - 1)) {
+                case "work":
+                    setColorAndText("workTime");
+                    break;
+                case "rest":
+                    setColorAndText("restTime");
+                    break;
+                case "preparation":
+                    setColorAndText("prepareTime");
+                    break;
+                case "long_rest":
+                    setColorAndText("longRestTime");
+                    break;
+                default:
+                    break;
+            }
+            startTimer();
+        } else {
+            update();
+            nextStep();
+        }
+
     }
 
     private void nextStep() {
@@ -77,7 +99,7 @@ public class TimerActivity extends AppCompatActivity {
             }
             stepNb++;
         } else {
-            //fin
+            finish();
         }
     }
 
@@ -153,5 +175,19 @@ public class TimerActivity extends AppCompatActivity {
 
     public void onStop(View view) {
         finish();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("step", stepNb);
+        outState.putLong("time", updatedTime);
+        timer.cancel();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
     }
 }
