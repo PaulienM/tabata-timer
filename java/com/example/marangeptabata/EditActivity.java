@@ -43,6 +43,9 @@ public class EditActivity extends AppCompatActivity {
             tabata = getIntent().getParcelableExtra("tabata");
             tabata.updateValues();
             update = true;
+        } else if (savedInstanceState != null) {
+            tabata = (Tabata) savedInstanceState.getParcelable("tabata");
+            tabata.updateValues();
         } else {
             tabata = new Tabata();
             update = false;
@@ -166,5 +169,11 @@ public class EditActivity extends AppCompatActivity {
 
     public void onPlay(View view) {
         startTimerActivity();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("tabata", this.tabata);
     }
 }
