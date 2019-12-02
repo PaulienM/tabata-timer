@@ -54,10 +54,13 @@ public class TimerActivity extends AppCompatActivity {
         //Event
         getSupportActionBar().hide();
         startPauseButton.setText("PAUSE");
+
+        // Récuperation de l'état courant
         if (savedInstanceState != null) {
             stepNb = savedInstanceState.getInt("step");
             updatedTime = savedInstanceState.getLong("time");
             switch (tabataCycle.get(stepNb - 1)) {
+                // On initialise la couleur et le texte correspondant à l'étape
                 case "work":
                     setColorAndText("workTime");
                     break;
@@ -81,6 +84,7 @@ public class TimerActivity extends AppCompatActivity {
 
     }
 
+    // fonction qui incremente le numero d'étape et lance la methode correspondant à l'etape
     private void nextStep() {
         if(tabataCycle.size() > stepNb) {
             switch (tabataCycle.get(stepNb)) {
@@ -166,6 +170,7 @@ public class TimerActivity extends AppCompatActivity {
         }.start();
     }
 
+    // Lorsque l'on appuie sur le bouton start pause, on change le texte du bouton et arrete ou lance le timer
     public void onStartPause(View view) {
         if(timerIsRunning) {
             timer.cancel();
