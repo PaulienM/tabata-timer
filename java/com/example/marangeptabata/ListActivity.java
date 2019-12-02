@@ -185,7 +185,6 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void onRemove(View view) {
-        System.out.println("la");
         findById(Long.parseLong(view.getTag().toString()), false, false, true);
     }
 }
