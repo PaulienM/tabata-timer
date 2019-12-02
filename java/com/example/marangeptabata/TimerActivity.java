@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.media.MediaPlayer;
 
 import com.example.marangeptabata.model.Tabata;
 
@@ -26,6 +27,7 @@ public class TimerActivity extends AppCompatActivity {
     private Map<String, String> stepNameList;
     private boolean timerIsRunning = false;
     //View
+    private MediaPlayer mediaPlayer;
     private Button startPauseButton;
     private Button stopButton;
     private TextView timerValue;
@@ -99,17 +101,20 @@ public class TimerActivity extends AppCompatActivity {
             }
             stepNb++;
         } else {
+            lancerSon("repos");
             finish();
         }
     }
 
     private void startWork() {
+        lancerSon("work");
         setColorAndText("workTime");
         updatedTime = tabata.getWorkTime() * 1000;
         this.startTimer();
     }
 
     private void startRest() {
+        lancerSon("repos");
         setColorAndText("restTime");
         updatedTime = tabata.getRestTime() * 1000;
         this.startTimer();
@@ -122,6 +127,7 @@ public class TimerActivity extends AppCompatActivity {
     }
 
     private void startLongRest() {
+        lancerSon("repos");
         setColorAndText("longRestTime");
         updatedTime = tabata.getLongRestTime() * 1000;
         this.startTimer();
@@ -189,5 +195,18 @@ public class TimerActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         timer.cancel();
+    }
+
+    private void lancerSon(String id) {
+        if(this.mediaPlayer != null) {
+            this.mediaPlayer.stop();
+            this.mediaPlayer.release();
+            this.mediaPlayer = null;
+        }
+        this.mediaPlayer = MediaPlayer.create(
+                this,
+                this.getResources().getIdentifier(id, "raw", this.getPackageName())
+        );
+        this.mediaPlayer.start();
     }
 }
